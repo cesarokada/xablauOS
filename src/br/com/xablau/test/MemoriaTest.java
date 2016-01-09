@@ -43,7 +43,7 @@ public class MemoriaTest {
 		assertEquals(200, memoria.getMemoria().get(1).getTamanho(), 0);
 		assertEquals(500, memoria.getMemoria().get(2).getTamanho(), 0);
 		
-		memoria.removeProcesso(p2);
+		memoria.removeProcesso(p1);
 		
 		assertEquals(3, memoria.getMemoria().size());
 		assertTrue(memoria.getMemoria().get(0).isDisponivel());
