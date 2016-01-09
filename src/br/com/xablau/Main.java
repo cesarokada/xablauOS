@@ -4,6 +4,8 @@ package br.com.xablau;
 public class Main {
 	
 	public static final Memoria memoria = new Memoria(1000);
+	
+	public static final CPU cpu = new CPU();
 
     public static void main(String[] args) {
         try {
