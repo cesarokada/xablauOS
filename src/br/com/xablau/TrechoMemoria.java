@@ -27,4 +27,13 @@ public class TrechoMemoria {
     public Processo getProcesso() {
         return processo;
     }
+    
+    public void atribuirProcesso(Processo processo) {
+    	this.processo = processo;
+    	this.tamanho = processo.getTamanho();
+    }
+
+	public void liberaMemoria() {
+		this.processo = null;
+	}
 }

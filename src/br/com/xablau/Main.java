@@ -2,6 +2,8 @@ package br.com.xablau;
 
 
 public class Main {
+	
+	public static final Memoria memoria = new Memoria(1000);
 
     public static void main(String[] args) {
         try {
@@ -13,12 +15,19 @@ public class Main {
 
     private static void initOS() throws InterruptedException {
         System.out.println("Initiallizing XablauOS...");
-        Thread.sleep(5000);
 
-        System.out.println("Initiallizing drivers...");
-        Thread.sleep(5000);
-
-        Processo processo = new Processo(300);
-        processo.run();
+        Processo p1 = new Processo(200, 100);
+        Processo p2 = new Processo(200, 300);
+        
+        memoria.print();
+        
+        memoria.addProcesso(p1);
+        memoria.print();
+        
+        memoria.addProcesso(p2);
+        memoria.print();
+        
+        memoria.removeProcesso(p2);
+        memoria.print();
     }
 }
