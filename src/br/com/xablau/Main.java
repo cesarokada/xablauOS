@@ -1,11 +1,16 @@
 package br.com.xablau;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
 	
 	public static final Memoria memoria = new Memoria(1000);
+
+    public static final List<Processo> processos = new ArrayList<Processo>();
 	
-	public static final CPU cpu = new CPU();
+	public static final CPU cpu = new CPU(processos);
 
     public static void main(String[] args) {
         try {
@@ -18,8 +23,8 @@ public class Main {
     private static void initOS() throws InterruptedException {
         System.out.println("Initiallizing XablauOS...");
 
-        Processo p1 = new Processo(200, 100);
-        Processo p2 = new Processo(200, 300);
+        Processo p1 = new Processo(200, 100, -1);
+        Processo p2 = new Processo(200, 300, -1);
         
         memoria.print();
         
