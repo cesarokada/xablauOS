@@ -1,22 +1,31 @@
 package br.com.xablau;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
 
 public class CPU {
-    private Processo processoEmExecucao;
-    protected List<Processo> processes = new ArrayList<Processo>();
+	protected List<Process> processes = new ArrayList<Process>();
 
-    public CPU(List<Processo> processes) {
-        this.processes = processes;
-    }
+	public CPU() {
+	}
+	
+	public void addProcess(Process process) {
+		processes.add(process);
+	}
 
-    public void executeProcesses() throws InterruptedException {
-        ListIterator<Processo> i = processes.listIterator();
-        while (i.hasNext()) {
-            Processo processo = i.next();
-            processo.run();
+	public long executeProcesses() throws InterruptedException {
+		long executionTime = 0;
 
-            i.remove();
-        }
-    }
+		ListIterator<Process> i = processes.listIterator();
+
+		while (i.hasNext()) {
+			Process process = i.next();
+			executionTime += process.run();
+
+			i.remove();
+		}
+
+		return executionTime;
+	}
 }

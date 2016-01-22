@@ -5,9 +5,9 @@ package br.com.xablau;
  */
 public class TrechoMemoria {
     private double tamanho;
-    private Processo processo;
+    private Process processo;
 
-    public TrechoMemoria(Processo processo) {
+    public TrechoMemoria(Process processo) {
         this.tamanho = processo.getTamanho();
         this.processo = processo;
     }
@@ -24,11 +24,11 @@ public class TrechoMemoria {
         return tamanho;
     }
 
-    public Processo getProcesso() {
+    public Process getProcesso() {
         return processo;
     }
     
-    public void atribuirProcesso(Processo processo) {
+    public void atribuirProcesso(Process processo) {
     	this.processo = processo;
     	this.tamanho = processo.getTamanho();
     }

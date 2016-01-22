@@ -1,34 +1,35 @@
 package br.com.xablau;
 
-import java.util.List;
 import java.util.ListIterator;
 
 public class CPURoundRobin extends CPU {
-    public CPURoundRobin(List<Processo> processes) {
-        super(processes);
+    public CPURoundRobin() {
     }
 
     @Override
-    public void executeProcesses() throws InterruptedException {
+    public long executeProcesses() throws InterruptedException {
+    	long executionTime = 0;
         long media = calculateAverageTime();
 
-        ListIterator<Processo> i = this.processes.listIterator();
+        ListIterator<Process> i = this.processes.listIterator();
         while (!this.processes.isEmpty()) {
             if (!i.hasNext()) {
                 i = this.processes.listIterator();
             }
 
-            Processo processo = i.next();
-            processo.run(media);
+            Process processo = i.next();
+            executionTime += processo.run(media);
 
             if (processo.isFinished())
                 i.remove();
         }
+        
+        return executionTime;
     }
 
     private long calculateAverageTime() {
         long totalTime = 0;
-        for (Processo process : this.processes) {
+        for (Process process : this.processes) {
             totalTime += process.getTime();
         }
 

@@ -4,14 +4,14 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import br.com.xablau.Memoria;
-import br.com.xablau.Processo;
+import br.com.xablau.Memory;
+import br.com.xablau.Process;
 
 public class MemoriaTest {
 
 	@Test
 	public void createMemoria() {
-		Memoria memoria = new Memoria(1000);
+		Memory memoria = new Memory(1000);
 		
 		assertEquals(1, memoria.getMemoria().size());
 		assertEquals(1000, memoria.getMemoria().get(0).getTamanho(), 0);
@@ -19,8 +19,8 @@ public class MemoriaTest {
 
 	@Test
 	public void addProcesso() {
-		Memoria memoria = new Memoria(1000);
-		Processo processo = new Processo(100, 300, -1);
+		Memory memoria = new Memory(1000);
+		Process processo = new Process(100, 300, -1);
 
 		memoria.addProcesso(processo);
 		
@@ -31,9 +31,9 @@ public class MemoriaTest {
 	
 	@Test
 	public void removeProcesso() {
-		Memoria memoria = new Memoria(1000);
-		Processo p1 = new Processo(100, 300, -1);
-		Processo p2 = new Processo(100, 200, -1);
+		Memory memoria = new Memory(1000);
+		Process p1 = new Process(100, 300, -1);
+		Process p2 = new Process(100, 200, -1);
 
 		memoria.addProcesso(p1);
 		memoria.addProcesso(p2);
@@ -53,9 +53,9 @@ public class MemoriaTest {
 	
 	@Test
 	public void removeProcessoUneEspacosVazios() {
-		Memoria memoria = new Memoria(1000);
-		Processo p1 = new Processo(100, 300, -1);
-		Processo p2 = new Processo(100, 200, -1);
+		Memory memoria = new Memory(1000);
+		Process p1 = new Process(100, 300, -1);
+		Process p2 = new Process(100, 200, -1);
 
 		memoria.addProcesso(p1);
 		memoria.addProcesso(p2);

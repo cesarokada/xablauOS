@@ -4,19 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-public class Memoria {
+public class Memory {
 
-    private List<TrechoMemoria> memoria = new ArrayList<TrechoMemoria>();
+    private List<TrechoMemoria> memory = new ArrayList<TrechoMemoria>();
 
-    public Memoria(double tamanho) {
-        this.memoria.add(new TrechoMemoria(tamanho));
+    public Memory(double tamanho) {
+        this.memory.add(new TrechoMemoria(tamanho));
     }
     
     public List<TrechoMemoria> getMemoria() {
-		return memoria;
+		return memory;
 	}
 
-    public void addProcesso(Processo processo) {
+    public void addProcesso(Process processo) {
         TrechoMemoria trecho = getEspacoDisponivel(processo.getTamanho());
         if (trecho == null) {
             return;
@@ -26,12 +26,12 @@ public class Memoria {
         trecho.atribuirProcesso(processo);
         if (espacoRestante != 0) {
         	TrechoMemoria trechoMemoriaDisponivel = new TrechoMemoria(espacoRestante);
-        	this.memoria.add(this.memoria.indexOf(trecho) + 1, trechoMemoriaDisponivel);
+        	this.memory.add(this.memory.indexOf(trecho) + 1, trechoMemoriaDisponivel);
         }
     }
 
-    public void removeProcesso(Processo processo) {
-		ListIterator<TrechoMemoria> i = memoria.listIterator();
+    public void removeProcesso(Process processo) {
+		ListIterator<TrechoMemoria> i = memory.listIterator();
 		
 		while(i.hasNext()) {
 			TrechoMemoria trecho = i.next();
@@ -67,7 +67,7 @@ public class Memoria {
 	}
 
 	public TrechoMemoria getEspacoDisponivel(double tamanhoProcesso) {
-        for (TrechoMemoria trecho : memoria) {
+        for (TrechoMemoria trecho : memory) {
             if (trecho.isDisponivel() && trecho.getTamanho() >= tamanhoProcesso)
                 return trecho;
         }
@@ -76,7 +76,7 @@ public class Memoria {
     }
 
     public void print() {
-        for (TrechoMemoria trecho : memoria) {
+        for (TrechoMemoria trecho : memory) {
         	System.out.println("Trecho de tamanho " + trecho.getTamanho() + (trecho.isDisponivel() ? "" : " não") + " disponível");
         }
         System.out.println("");
