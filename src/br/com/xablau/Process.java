@@ -6,6 +6,8 @@ public class Process {
 	private double tamanho;
 	private int priority;
 
+	private ProcessStatus status;
+
 	public Process() {
 
 	}
@@ -15,6 +17,7 @@ public class Process {
 		this.tamanho = tamanho;
 		this.priority = priority;
 		this.timeLeft = time;
+		this.status = ProcessStatus.NEW;
 	}
 
 	public long run() throws InterruptedException {
@@ -70,6 +73,14 @@ public class Process {
 
 	public void setPriority(int priority) {
 		this.priority = priority;
+	}
+
+	public ProcessStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(ProcessStatus status) {
+		this.status = status;
 	}
 
 	private void decreaseTimeLeft(long time) {
