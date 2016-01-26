@@ -6,11 +6,11 @@ import java.util.List;
 
 public class Main {
 	
-	public static final Memory memoria = new Memory(1000);
+	public static final Memory memory = new Memory(1000);
 
     public static final List<Process> processos = new ArrayList<Process>();
 	
-	public static final CPU cpu = new CPU();
+	public static final CPU cpu = new CPU(memory);
 
     public static void main(String[] args) {
         try {
@@ -26,15 +26,15 @@ public class Main {
         Process p1 = new Process(200, 100, -1);
         Process p2 = new Process(200, 300, -1);
         
-        memoria.print();
+        memory.print();
         
-        memoria.addProcess(p1);
-        memoria.print();
+        memory.addProcess(p1);
+        memory.print();
         
-        memoria.addProcess(p2);
-        memoria.print();
+        memory.addProcess(p2);
+        memory.print();
         
-        memoria.removeProcess(p2);
-        memoria.print();
+        memory.removeProcess(p2);
+        memory.print();
     }
 }
