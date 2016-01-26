@@ -3,10 +3,12 @@ package br.com.xablau;
 import java.util.ListIterator;
 
 public class CPURoundRobin extends CPU {
-    public CPURoundRobin() {
-    }
 
-    @Override
+    public CPURoundRobin(Memory memory) {
+		super(memory);
+	}
+
+	@Override
     public long executeProcesses() throws InterruptedException {
     	long executionTime = 0;
         long media = calculateAverageTime();
@@ -17,11 +19,25 @@ public class CPURoundRobin extends CPU {
                 i = this.processes.listIterator();
             }
 
-            Process processo = i.next();
-            executionTime += processo.run(media);
+            Process process = i.next();
+            
+            if (!this.processes.contains(process)) {
+            	try {
+            		this.memory.addProcess(process);
+            		process.changeStatus(ProcessEvent.SCHEDULER_DISPATCH);
+            	} catch (OutOfMemoryError e) {
+            		// TODO
+            	}
+            }
+            
+            executionTime += process.run(media);
 
-            if (processo.isFinished())
+            if (process.isFinished()) {
+            	process.changeStatus(ProcessEvent.EXIT);
                 i.remove();
+            } else {
+            	process.changeStatus(ProcessEvent.INTERRUPT);
+            }
         }
         
         return executionTime;

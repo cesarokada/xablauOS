@@ -20,7 +20,7 @@ public class CPUTest {
 		Process p5 = new Process(200, 300, -1);
 		Process p6 = new Process(200, 300, -1);
 
-		CPU cpu = new CPU();
+		CPU cpu = new CPU(null);
 
 		cpu.addProcess(p1);
 		cpu.addProcess(p2);
@@ -41,7 +41,7 @@ public class CPUTest {
 		Process p5 = new Process(200, 300, 5);
 		Process p6 = new Process(200, 300, 6);
 
-		CPU cpu = new CPUPriority();
+		CPU cpu = new CPUPriority(null);
 
 		cpu.addProcess(p1);
 		cpu.addProcess(p2);
@@ -62,7 +62,7 @@ public class CPUTest {
 		Process p5 = new Process(500, 300, 5);
 		Process p6 = new Process(600, 300, 6);
 
-		CPU cpu = new CPURoundRobin();
+		CPU cpu = new CPURoundRobin(null);
 
 		cpu.addProcess(p1);
 		cpu.addProcess(p2);

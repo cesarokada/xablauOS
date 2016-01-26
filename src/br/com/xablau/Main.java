@@ -28,13 +28,13 @@ public class Main {
         
         memoria.print();
         
-        memoria.addProcesso(p1);
+        memoria.addProcess(p1);
         memoria.print();
         
-        memoria.addProcesso(p2);
+        memoria.addProcess(p2);
         memoria.print();
         
-        memoria.removeProcesso(p2);
+        memoria.removeProcess(p2);
         memoria.print();
     }
 }

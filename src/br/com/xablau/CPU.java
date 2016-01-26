@@ -6,11 +6,14 @@ import java.util.ListIterator;
 
 public class CPU {
 	protected List<Process> processes = new ArrayList<Process>();
+	protected Memory memory;
 
-	public CPU() {
+	public CPU(Memory memory) {
+		this.memory = memory;
 	}
-	
+
 	public void addProcess(Process process) {
+		process.changeStatus(ProcessEvent.ADMITED);
 		processes.add(process);
 	}
 
@@ -21,8 +24,17 @@ public class CPU {
 
 		while (i.hasNext()) {
 			Process process = i.next();
+
+			try {
+				memory.addProcess(process);
+				process.changeStatus(ProcessEvent.SCHEDULER_DISPATCH);
+			} catch (OutOfMemoryError e) {
+				// TODO fazer essa merda
+			}
+
 			executionTime += process.run();
 
+			process.changeStatus(ProcessEvent.EXIT);
 			i.remove();
 		}
 

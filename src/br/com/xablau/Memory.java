@@ -6,80 +6,101 @@ import java.util.ListIterator;
 
 public class Memory {
 
-    private List<TrechoMemoria> memory = new ArrayList<TrechoMemoria>();
+	protected List<TrechoMemoria> memory = new ArrayList<TrechoMemoria>();
 
-    public Memory(double tamanho) {
-        this.memory.add(new TrechoMemoria(tamanho));
-    }
-    
-    public List<TrechoMemoria> getMemoria() {
+	public Memory(double size) {
+		this.memory.add(new TrechoMemoria(size));
+	}
+
+	public List<TrechoMemoria> getMemoria() {
 		return memory;
 	}
 
-    public void addProcesso(Process processo) {
-        TrechoMemoria trecho = getEspacoDisponivel(processo.getTamanho());
-        if (trecho == null) {
-            return;
-        }
-        
-        double espacoRestante = trecho.getTamanho() - processo.getTamanho();
-        trecho.atribuirProcesso(processo);
-        if (espacoRestante != 0) {
-        	TrechoMemoria trechoMemoriaDisponivel = new TrechoMemoria(espacoRestante);
-        	this.memory.add(this.memory.indexOf(trecho) + 1, trechoMemoriaDisponivel);
-        }
-    }
+	public void addProcess(Process process) {
+		TrechoMemoria allocatedTrecho = processAlreadyInMemory(process);
+		if (allocatedTrecho != null) {
+			allocatedTrecho.use();
+			return;
+		}
 
-    public void removeProcesso(Process processo) {
+		TrechoMemoria trecho = getAvailableMemory(process.getTamanho());
+
+		double espacoRestante = trecho.getTamanho() - process.getTamanho();
+
+		trecho.atribuirProcesso(process);
+		if (espacoRestante != 0) {
+			TrechoMemoria trechoMemoriaDisponivel = new TrechoMemoria(espacoRestante);
+			this.memory.add(this.memory.indexOf(trecho) + 1, trechoMemoriaDisponivel);
+		}
+	}
+
+	private TrechoMemoria processAlreadyInMemory(Process process) {
+		for (TrechoMemoria trechoMemoria : memory) {
+			if (trechoMemoria.getProcesso().equals(process))
+				return trechoMemoria;
+		}
+
+		return null;
+	}
+
+	public void removeProcess(Process process) {
 		ListIterator<TrechoMemoria> i = memory.listIterator();
-		
-		while(i.hasNext()) {
+
+		while (i.hasNext()) {
 			TrechoMemoria trecho = i.next();
-			
-			if (processo.equals(trecho.getProcesso())) {
-				double memoriaDisponivel = trecho.getTamanho();
-				
+
+			if (process.equals(trecho.getProcesso())) {
+				double availableMemory = trecho.getTamanho();
+
 				if (i.hasPrevious()) {
-					TrechoMemoria anterior = i.previous();
-					if (anterior.isDisponivel()) {
-						memoriaDisponivel += anterior.getTamanho();
+					TrechoMemoria prev = i.previous();
+					if (prev.isDisponivel()) {
+						availableMemory += prev.getTamanho();
 						i.remove();
 					} else {
 						i.next();
 					}
 				}
 				if (i.hasNext()) {
-					TrechoMemoria proximo = i.next();
-					if (proximo.isDisponivel()) {
-						memoriaDisponivel += proximo.getTamanho();
+					TrechoMemoria next = i.next();
+					if (next.isDisponivel()) {
+						availableMemory += next.getTamanho();
 						i.remove();
 					} else {
 						i.previous();
 					}
 				}
-				
+
 				i.previous();
 				i.next();
-				
-				i.set(new TrechoMemoria(memoriaDisponivel));
+
+				i.set(new TrechoMemoria(availableMemory));
 			}
 		}
 	}
 
-	public TrechoMemoria getEspacoDisponivel(double tamanhoProcesso) {
-        for (TrechoMemoria trecho : memory) {
-            if (trecho.isDisponivel() && trecho.getTamanho() >= tamanhoProcesso)
-                return trecho;
-        }
+	public TrechoMemoria getAvailableMemory(double processSize) {
+		TrechoMemoria trechoToRemove = null;
 
-        return null;
-    }
+		for (TrechoMemoria trecho : memory) {
+			if (trecho.isDisponivel() && trecho.getTamanho() >= processSize)
+				return trecho;
 
-    public void print() {
-        for (TrechoMemoria trecho : memory) {
-        	System.out.println("Trecho de tamanho " + trecho.getTamanho() + (trecho.isDisponivel() ? "" : " não") + " disponível");
-        }
-        System.out.println("");
-    }
+			if (trechoToRemove == null && !trecho.getProcesso().isRunning() 
+					|| trecho.getCreated().compareTo(trechoToRemove.getCreated()) < 0) {
+				trechoToRemove = trecho;
+			}
+		}
+
+		return trechoToRemove;
+	}
+
+	public void print() {
+		for (TrechoMemoria trecho : memory) {
+			System.out.println("Trecho de tamanho " + trecho.getTamanho() + (trecho.isDisponivel() ? "" : " não") + " disponível");
+		}
+
+		System.out.println("");
+	}
 
 }

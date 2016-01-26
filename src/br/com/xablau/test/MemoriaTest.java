@@ -22,7 +22,7 @@ public class MemoriaTest {
 		Memory memoria = new Memory(1000);
 		Process processo = new Process(100, 300, -1);
 
-		memoria.addProcesso(processo);
+		memoria.addProcess(processo);
 		
 		assertEquals(2, memoria.getMemoria().size());
 		assertEquals(300, memoria.getMemoria().get(0).getTamanho(), 0);
@@ -35,15 +35,15 @@ public class MemoriaTest {
 		Process p1 = new Process(100, 300, -1);
 		Process p2 = new Process(100, 200, -1);
 
-		memoria.addProcesso(p1);
-		memoria.addProcesso(p2);
+		memoria.addProcess(p1);
+		memoria.addProcess(p2);
 		
 		assertEquals(3, memoria.getMemoria().size());
 		assertEquals(300, memoria.getMemoria().get(0).getTamanho(), 0);
 		assertEquals(200, memoria.getMemoria().get(1).getTamanho(), 0);
 		assertEquals(500, memoria.getMemoria().get(2).getTamanho(), 0);
 		
-		memoria.removeProcesso(p1);
+		memoria.removeProcess(p1);
 		
 		assertEquals(3, memoria.getMemoria().size());
 		assertTrue(memoria.getMemoria().get(0).isDisponivel());
@@ -57,10 +57,10 @@ public class MemoriaTest {
 		Process p1 = new Process(100, 300, -1);
 		Process p2 = new Process(100, 200, -1);
 
-		memoria.addProcesso(p1);
-		memoria.addProcesso(p2);
+		memoria.addProcess(p1);
+		memoria.addProcess(p2);
 		
-		memoria.removeProcesso(p2);
+		memoria.removeProcess(p2);
 		
 		assertEquals(2, memoria.getMemoria().size());
 		assertEquals(700, memoria.getMemoria().get(1).getTamanho(), 0);

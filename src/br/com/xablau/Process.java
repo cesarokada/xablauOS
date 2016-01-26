@@ -21,14 +21,15 @@ public class Process {
 	}
 
 	public long run() throws InterruptedException {
-		System.out.println("Iniciando execução");
-		Thread.sleep(this.getTime());
-		System.out.println("Processo finalizado.");
-
-		return this.getTime();
+		return run(this.getTime());
 	}
 
 	public long run(long time) throws InterruptedException {
+		if (((int) Math.random()) * 10 == 7) {
+			System.out.println("Deadlock!");
+			return 0;
+		}
+
 		System.out.println("Iniciando execução");
 		Thread.sleep(time);
 		System.out.println("Processo finalizado.");
@@ -47,47 +48,36 @@ public class Process {
 		return time;
 	}
 
-	public void setTime(long time) {
-		this.time = time;
-	}
-
 	public long getTimeLeft() {
 		return timeLeft;
-	}
-
-	public void setTimeLeft(long timeLeft) {
-		this.timeLeft = timeLeft;
 	}
 
 	public double getTamanho() {
 		return tamanho;
 	}
 
-	public void setTamanho(double tamanho) {
-		this.tamanho = tamanho;
-	}
-
 	public int getPriority() {
 		return priority;
-	}
-
-	public void setPriority(int priority) {
-		this.priority = priority;
 	}
 
 	public ProcessStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(ProcessStatus status) {
-		this.status = status;
-	}
-
 	private void decreaseTimeLeft(long time) {
 		this.timeLeft = Math.max(this.timeLeft - time, 0);
 	}
 
-	public boolean isFinished() {
-		return this.timeLeft == 0;
+	public boolean isRunning() {
+		return this.getStatus() == ProcessStatus.RUNNING;
 	}
+
+	public boolean isFinished() {
+		return this.getStatus() == ProcessStatus.TERMINATED;
+	}
+
+	public void changeStatus(ProcessEvent event) {
+		this.status = event.nextStatus(this.status);
+	}
+
 }

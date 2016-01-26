@@ -17,8 +17,22 @@ public enum ProcessEvent {
 		this.nextStatus = nextStatus;
 	}
 
-	public ProcessStatus nextStatus(ProcessStatus currentStatus) {
+	public ProcessStatus nextStatus(ProcessStatus currentStatus) {		
 		if (this.validStatus == currentStatus) {
+			switch (this) {
+			case SCHEDULER_DISPATCH:
+				System.out.println("Trocando contexto");
+				break;
+			case IO_WAIT:
+				System.out.println("Aguardando IO");
+				break;
+			case IO_COMPLETE:
+				System.out.println("IO pronto");
+				break;
+			default:
+				break;
+			}
+			
 			return this.nextStatus;
 		} else {
 			throw new RuntimeException("Invalid status");
