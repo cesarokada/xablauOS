@@ -5,12 +5,6 @@ import java.util.List;
 
 public class Main {
 
-	public static final Memory memory = new Memory(1000);
-
-	public static final List<Process> processos = new ArrayList<Process>();
-
-	public static final CPU cpu = new CPU(memory);
-
 	public static void main(String[] args) {
 		try {
 			initOS();
@@ -22,24 +16,86 @@ public class Main {
 	private static void initOS() throws InterruptedException {
 		System.out.println("Initiallizing XablauOS...");
 
-		Memory memory = new Memory(1000);
-
-		Process p1 = new Process(100, 200, 1, "1");
-		Process p2 = new Process(200, 200, 2, "2");
-		Process p3 = new Process(300, 200, 3, "3");
-		Process p4 = new Process(400, 200, 4, "4");
-		Process p5 = new Process(500, 200, 5, "5");
-		Process p6 = new Process(600, 200, 6, "6");
-
-		CPU cpu = new CPURoundRobin(memory);
-
-		cpu.addProcess(p1);
-		cpu.addProcess(p2);
-		cpu.addProcess(p3);
-		cpu.addProcess(p4);
-		cpu.addProcess(p5);
-		cpu.addProcess(p6);
-		
-		cpu.executeProcesses();
+		initRoundRobin();
+                
+                System.out.println("Próxima execução em 5s");
+                Thread.sleep(5000);
+                
+                initPriority();
+                
+                System.out.println("Próxima execução em 5s");
+                Thread.sleep(5000);
+                
+                initFCFS();
+               
 	}
+        
+        private static void initRoundRobin() throws InterruptedException{
+            Memory memory = new Memory(1000);
+
+            Process p1 = new Process(100, 200, 1, "Word");
+            Process p2 = new Process(200, 200, 2, "Excel");
+            Process p3 = new Process(300, 200, 3, "Power Point");
+            Process p4 = new Process(400, 200, 4, "Photoshop");
+            Process p5 = new Process(500, 200, 5, "Google Chrome");
+            Process p6 = new Process(600, 200, 6, "Steam");
+
+            CPU cpu = new CPURoundRobin(memory);
+
+            cpu.addProcess(p1);
+            cpu.addProcess(p2);
+            cpu.addProcess(p3);
+            cpu.addProcess(p4);
+            cpu.addProcess(p5);
+            cpu.addProcess(p6);
+
+            System.out.println("Simulação do algoritmo de escalonamento Round Robin");
+            System.out.println("Tempo de execução do algoritmo: " + cpu.executeProcesses() + " ms");
+        }
+        
+        private static void initPriority() throws InterruptedException{
+            Memory memory= new Memory(1000);
+            
+            Process p1 = new Process(100, 200, 5, "Word");
+            Process p2 = new Process(200, 200, 3, "Excel");
+            Process p3 = new Process(300, 200, 1, "Power Point");
+            Process p4 = new Process(400, 200, 4, "Photoshop");
+            Process p5 = new Process(500, 200, 2, "Google Chrome");
+            Process p6 = new Process(600, 200, 6, "Steam");
+
+            CPU cpu = new CPUPriority(memory);
+
+            cpu.addProcess(p1);
+            cpu.addProcess(p2);
+            cpu.addProcess(p3);
+            cpu.addProcess(p4);
+            cpu.addProcess(p5);
+            cpu.addProcess(p6);
+
+            System.out.println("Simulação do algoritmo de escalonamento de prioridades");
+            System.out.println("Tempo de execução do algoritmo: " + cpu.executeProcesses() + " ms");
+        }
+        
+        private static void initFCFS() throws InterruptedException{
+            Memory memory= new Memory(1000);
+            
+            Process p1 = new Process(100, 200, 5, "Word");
+            Process p2 = new Process(200, 200, 3, "Excel");
+            Process p3 = new Process(300, 200, 1, "Power Point");
+            Process p4 = new Process(400, 200, 4, "Photoshop");
+            Process p5 = new Process(500, 200, 2, "Google Chrome");
+            Process p6 = new Process(600, 200, 6, "Steam");
+
+            CPU cpu = new CPU(memory);
+
+            cpu.addProcess(p1);
+            cpu.addProcess(p2);
+            cpu.addProcess(p3);
+            cpu.addProcess(p4);
+            cpu.addProcess(p5);
+            cpu.addProcess(p6);
+
+            System.out.println("Simulação do algoritmo de escalonamento FCFS");
+            System.out.println("Tempo de execução do algoritmo: " + cpu.executeProcesses() + " ms");
+        }
 }

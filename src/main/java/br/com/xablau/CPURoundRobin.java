@@ -8,7 +8,7 @@ public class CPURoundRobin extends CPU {
 		super(memory);
 	}
 
-	@Override
+    @Override
     public long executeProcesses() throws InterruptedException {
     	long executionTime = 0;
         long averageTime = calculateAverageTime();
