@@ -29,7 +29,7 @@ public class Process {
 	public long run(long time) throws InterruptedException {
 		//Simula randomicamente alguma situação de deadlock
 		
-		if ((int) (Math.random() * 10) == 4) {
+		if ((int) (Math.random() * 100) == 4) {
 			throw new InterruptedException("Deadlock!");
 		}
 
