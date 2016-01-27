@@ -33,8 +33,7 @@ public class CPU {
 			}
 
 			executionTime += process.run();
-
-			process.changeStatus(ProcessEvent.EXIT);
+			
 			i.remove();
 		}
 

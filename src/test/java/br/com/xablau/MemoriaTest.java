@@ -1,11 +1,10 @@
-package br.com.xablau.test;
+package br.com.xablau;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-
-import br.com.xablau.Memory;
-import br.com.xablau.Process;
 
 public class MemoriaTest {
 

@@ -11,7 +11,7 @@ public class CPURoundRobin extends CPU {
 	@Override
     public long executeProcesses() throws InterruptedException {
     	long executionTime = 0;
-        long media = calculateAverageTime();
+        long averageTime = calculateAverageTime();
 
         ListIterator<Process> i = this.processes.listIterator();
         while (!this.processes.isEmpty()) {
@@ -21,19 +21,19 @@ public class CPURoundRobin extends CPU {
 
             Process process = i.next();
             
-            if (!this.processes.contains(process)) {
+            if (!this.memory.containsProcess(process)) {
             	try {
             		this.memory.addProcess(process);
-            		process.changeStatus(ProcessEvent.SCHEDULER_DISPATCH);
             	} catch (OutOfMemoryError e) {
             		// TODO
             	}
             }
             
-            executionTime += process.run(media);
+            process.changeStatus(ProcessEvent.SCHEDULER_DISPATCH);
+            
+            executionTime += process.run(averageTime);
 
             if (process.isFinished()) {
-            	process.changeStatus(ProcessEvent.EXIT);
                 i.remove();
             } else {
             	process.changeStatus(ProcessEvent.INTERRUPT);

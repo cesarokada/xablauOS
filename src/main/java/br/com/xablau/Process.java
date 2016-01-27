@@ -66,14 +66,18 @@ public class Process {
 
 	private void decreaseTimeLeft(long time) {
 		this.timeLeft = Math.max(this.timeLeft - time, 0);
+		
+		if (this.timeLeft == 0) {
+			changeStatus(ProcessEvent.EXIT);
+		}
 	}
 
 	public boolean isRunning() {
-		return this.getStatus() == ProcessStatus.RUNNING;
+		return this.status == ProcessStatus.RUNNING;
 	}
 
 	public boolean isFinished() {
-		return this.getStatus() == ProcessStatus.TERMINATED;
+		return this.status == ProcessStatus.TERMINATED;
 	}
 
 	public void changeStatus(ProcessEvent event) {

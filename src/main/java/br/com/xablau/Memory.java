@@ -36,7 +36,7 @@ public class Memory {
 
 	private TrechoMemoria processAlreadyInMemory(Process process) {
 		for (TrechoMemoria trechoMemoria : memory) {
-			if (trechoMemoria.getProcesso().equals(process))
+			if (process.equals(trechoMemoria.getProcesso()))
 				return trechoMemoria;
 		}
 
@@ -86,13 +86,22 @@ public class Memory {
 			if (trecho.isDisponivel() && trecho.getTamanho() >= processSize)
 				return trecho;
 
-			if (trechoToRemove == null && !trecho.getProcesso().isRunning() 
-					|| trecho.getCreated().compareTo(trechoToRemove.getCreated()) < 0) {
-				trechoToRemove = trecho;
+			if (trecho.getTamanho() >= processSize) {
+				if (trechoToRemove == null && processIsNotRunning(trecho) || processIsOlderThanOther(trechoToRemove, trecho)) {
+					trechoToRemove = trecho;
+				}
 			}
 		}
 
 		return trechoToRemove;
+	}
+
+	private boolean processIsNotRunning(TrechoMemoria trecho) {
+		return trecho.getProcesso() != null && !trecho.getProcesso().isRunning();
+	}
+
+	private boolean processIsOlderThanOther(TrechoMemoria trecho1, TrechoMemoria trecho2) {
+		return trecho2.getCreated().compareTo(trecho1.getCreated()) < 0;
 	}
 
 	public void print() {
@@ -101,6 +110,10 @@ public class Memory {
 		}
 
 		System.out.println("");
+	}
+
+	public boolean containsProcess(Process process) {		
+		return processAlreadyInMemory(process) != null;
 	}
 
 }
