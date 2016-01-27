@@ -24,6 +24,9 @@ public class Memory {
 		}
 
 		TrechoMemoria trecho = getAvailableMemory(process.getTamanho());
+		
+		if (trecho == null)
+			throw new OutOfMemoryError();
 
 		double espacoRestante = trecho.getTamanho() - process.getTamanho();
 

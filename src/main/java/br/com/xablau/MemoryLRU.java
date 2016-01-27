@@ -5,7 +5,7 @@ public class MemoryLRU extends Memory {
 	public MemoryLRU(double size) {
 		super(size);
 	}
-	
+
 	@Override
 	public TrechoMemoria getAvailableMemory(double processSize) {
 		TrechoMemoria trechoToRemove = null;
@@ -14,13 +14,22 @@ public class MemoryLRU extends Memory {
 			if (trecho.isDisponivel() && trecho.getTamanho() >= processSize)
 				return trecho;
 
-			if (trechoToRemove == null && !trecho.getProcesso().isRunning() 
-					|| trecho.getLastUse().compareTo(trechoToRemove.getLastUse()) < 0) {
-				trechoToRemove = trecho;
+			if (trecho.getTamanho() >= processSize) {
+				if (trechoToRemove == null && processIsNotRunning(trecho) || processUsedMoreRecently(trechoToRemove, trecho)) {
+					trechoToRemove = trecho;
+				}
 			}
 		}
 
 		return trechoToRemove;
 	}
-	
+
+	private boolean processIsNotRunning(TrechoMemoria trecho) {
+		return trecho.getProcesso() != null && !trecho.getProcesso().isRunning();
+	}
+
+	private boolean processUsedMoreRecently(TrechoMemoria trechoToRemove, TrechoMemoria trecho) {
+		return trecho.getLastUse().compareTo(trechoToRemove.getLastUse()) < 0;
+	}
+
 }

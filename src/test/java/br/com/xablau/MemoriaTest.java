@@ -19,7 +19,7 @@ public class MemoriaTest {
 	@Test
 	public void addProcesso() {
 		Memory memoria = new Memory(1000);
-		Process processo = new Process(100, 300, -1);
+		Process processo = new Process(100, 300, -1, "Teste");
 
 		memoria.addProcess(processo);
 		
@@ -31,8 +31,8 @@ public class MemoriaTest {
 	@Test
 	public void removeProcesso() {
 		Memory memoria = new Memory(1000);
-		Process p1 = new Process(100, 300, -1);
-		Process p2 = new Process(100, 200, -1);
+		Process p1 = new Process(100, 300, -1, "Teste 1");
+		Process p2 = new Process(100, 200, -1, "Teste 2");
 
 		memoria.addProcess(p1);
 		memoria.addProcess(p2);
@@ -53,8 +53,8 @@ public class MemoriaTest {
 	@Test
 	public void removeProcessoUneEspacosVazios() {
 		Memory memoria = new Memory(1000);
-		Process p1 = new Process(100, 300, -1);
-		Process p2 = new Process(100, 200, -1);
+		Process p1 = new Process(100, 300, -1, "Teste 1");
+		Process p2 = new Process(100, 200, -1, "Teste 2");
 
 		memoria.addProcess(p1);
 		memoria.addProcess(p2);

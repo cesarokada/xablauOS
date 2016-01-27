@@ -5,6 +5,7 @@ public class Process {
 	private long timeLeft;
 	private double tamanho;
 	private int priority;
+	private String description;
 
 	private ProcessStatus status;
 
@@ -12,11 +13,12 @@ public class Process {
 
 	}
 
-	public Process(long time, double tamanho, int priority) {
+	public Process(long time, double tamanho, int priority, String description) {
 		this.time = time;
 		this.tamanho = tamanho;
 		this.priority = priority;
 		this.timeLeft = time;
+		this.description = description;
 		this.status = ProcessStatus.NEW;
 	}
 
@@ -25,14 +27,14 @@ public class Process {
 	}
 
 	public long run(long time) throws InterruptedException {
-		if (((int) Math.random()) * 10 == 7) {
-			System.out.println("Deadlock!");
-			return 0;
+		//Simula randomicamente alguma situação de deadlock
+		
+		if ((int) (Math.random() * 10) == 4) {
+			throw new InterruptedException("Deadlock!");
 		}
 
-		System.out.println("Iniciando execução");
+		System.out.println("Processo " + description + " em execução");
 		Thread.sleep(time);
-		System.out.println("Processo finalizado.");
 
 		decreaseTimeLeft(time);
 
@@ -66,9 +68,12 @@ public class Process {
 
 	private void decreaseTimeLeft(long time) {
 		this.timeLeft = Math.max(this.timeLeft - time, 0);
-		
+
 		if (this.timeLeft == 0) {
 			changeStatus(ProcessEvent.EXIT);
+			System.out.println("Processo " + description + " finalizado.");
+		} else {
+			System.out.println("Processo " + description + " interrompido após " + time + " ms.");
 		}
 	}
 
